@@ -409,11 +409,6 @@ The current project documentation recommends Gunicorn behind HTTPS for productio
 B.Tech Computer Science Student
 Interested in **Software Development, Cloud Computing, Artificial Intelligence, and Machine Learning**.
 
-### Connect With Me
-
-* 💼 LinkedIn: **Add your LinkedIn URL**
-* 🐙 GitHub: **Add your GitHub URL**
-* 📧 Email: **Add your professional email**
 
 ---
 
@@ -423,6 +418,3 @@ If you find this project useful, consider giving the repository a ⭐ on GitHub.
 
 ---
 
-## 📄 License
-
-Add your preferred open-source license here, such as **MIT License**, if you choose to distribute the project under that license.
