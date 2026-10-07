@@ -1,107 +1,131 @@
 # 🤖 Nova AI Chatbot
 
-> **A modern, secure, and responsive AI-powered conversational web application built with Flask and SQLite.**
+### A Secure, Full-Stack AI Conversational Web Application
 
-Nova AI Chatbot is a full-stack conversational web application designed to provide a clean and engaging AI chat experience. It combines a responsive interface with authentication, persistent chat history, multiple themes, voice interaction, local/offline bot functionality, and a security-focused backend.
+Nova AI Chatbot is a modern, responsive AI-powered chatbot built with **Python, Flask, SQLite, HTML, CSS, and JavaScript**. It provides an interactive conversational experience with authentication, persistent chat history, voice interaction, multiple themes, dark mode, and a security-focused backend architecture.
 
-The application can work with a built-in offline bot or connect to **Google Gemini / OpenAI** through environment-based API configuration for real AI responses.
+The application works offline with a built-in chatbot and can be connected to **Google Gemini or OpenAI** for real AI-powered responses.
 
 ---
 
-## ✨ Features
+## ✨ Why Nova AI?
+
+Nova was designed not just as a chatbot interface, but as a complete web application with a focus on:
+
+* 🔐 Secure user authentication
+* 💬 Interactive AI conversations
+* 🗂️ Persistent chat history
+* 🎙️ Voice input and output
+* 🌙 Dark mode and multiple themes
+* 📱 Responsive user interface
+* 🛡️ CSRF protection and security headers
+* 🚦 Rate limiting and request validation
+* 🗄️ SQLite-based data persistence
+* 🐳 Docker support
+* ⚡ Offline chatbot functionality
+
+---
+
+## 🚀 Key Features
 
 ### 💬 Intelligent Chat Experience
 
-* Modern conversational chat interface
-* Real-time typing animation
-* Persistent chat history
+* Interactive chatbot interface
+* Typing animation
+* Conversation history
 * Built-in offline chatbot
-* Optional Gemini / OpenAI integration
-* Markdown message rendering
+* Gemini/OpenAI integration through environment variables
 
-### 🔐 Authentication & Security
+### 👤 Authentication
 
 * User registration and login
 * Secure password hashing using **scrypt**
-* CSRF protection
 * Session management
-* Rate limiting and account lockout
-* Request validation and size limits
-* Secure HTTP headers
-* Content Security Policy (CSP)
-* Secure cookies with HttpOnly and SameSite protection
-* Origin validation
-* Parameterized SQL queries
-* API keys protected through environment variables
+* CSRF protection
+* Login protection and rate limiting
+* Password validation
 
-### 🎨 Modern User Interface
+### 🎨 Modern UI/UX
 
 * Responsive design
 * Dark mode
-* Multiple visual themes
-* Clean landing/home page
-* Interactive controls
-* Custom SVG icons
-* Smooth user interactions
+* 4 customizable themes
+* Modern typography and visual design
+* Interactive chat interface
+* SVG icon system
 
-### 🎙️ Voice Features
+### 🎙️ Voice Interaction
 
 * Voice input
 * Voice output
-* Interactive conversational experience
+* Natural conversational experience
 
-### 💾 Data Management
+### 🗄️ Data Management
 
 * SQLite database
-* Persistent user and chat data
+* Persistent chat storage
+* Parameterized SQL queries
 * Automatic database creation when required
-* Structured database schema
 
-### 🚀 Deployment
+### 🛡️ Security
 
-* Local Flask development
-* Docker support
-* Gunicorn production server
-* Windows and macOS/Linux run scripts
-* VS Code launch configuration
+Nova includes multiple application-level security controls:
 
----
-
-## 🛠️ Tech Stack
-
-| Technology          | Purpose                   |
-| ------------------- | ------------------------- |
-| **Python**          | Core application logic    |
-| **Flask**           | Backend web framework     |
-| **SQLite**          | Database                  |
-| **HTML5**           | Application structure     |
-| **CSS3**            | Styling and responsive UI |
-| **JavaScript**      | Client-side interactions  |
-| **Jinja2**          | Server-side templating    |
-| **Gemini / OpenAI** | Optional AI responses     |
-| **Docker**          | Containerization          |
-| **Gunicorn**        | Production WSGI server    |
+* CSRF protection
+* Origin validation
+* Rate limiting
+* Account/request lockout protection
+* Strict Content Security Policy
+* HSTS support
+* Secure cookies
+* HttpOnly cookies
+* SameSite cookies
+* COOP/CORP headers
+* Request-size limits
+* Input validation
+* Auto-escaped templates
+* Sanitized Markdown rendering
+* Parameterized SQL
+* Protected environment variables
+* Server-side AI error logging
 
 ---
 
-## 📁 Project Structure
+## 🧰 Tech Stack
+
+| Category         | Technology                                |
+| ---------------- | ----------------------------------------- |
+| Backend          | Python, Flask                             |
+| Frontend         | HTML5, CSS3, JavaScript                   |
+| Database         | SQLite                                    |
+| Templates        | Jinja2                                    |
+| AI Integration   | Google Gemini / OpenAI                    |
+| Authentication   | Flask-based authentication                |
+| Security         | CSRF, CSP, rate limiting, secure sessions |
+| Containerization | Docker                                    |
+| Development      | VS Code                                   |
+| Version Control  | Git & GitHub                              |
+
+---
+
+## 🏗️ Project Architecture
 
 ```text
 Nova-AI-Chatbot/
 │
-├── app.py                  # Flask routes, chatbot logic and database access
-├── security.py             # Security, CSRF, headers, rate limiting and validation
-├── schema.sql              # Database schema
-├── chat.db                 # SQLite database
+├── app.py
+├── security.py
+├── schema.sql
+├── chat.db
 │
 ├── templates/
-│   ├── base
-│   ├── icons
-│   ├── controls
-│   ├── home
-│   ├── auth
-│   ├── chat
-│   └── error
+│   ├── base/
+│   ├── icons/
+│   ├── controls/
+│   ├── home/
+│   ├── auth/
+│   ├── chat/
+│   └── error/
 │
 ├── static/
 │   ├── style.css
@@ -111,21 +135,24 @@ Nova-AI-Chatbot/
 │   └── fonts/
 │
 ├── standalone/
-│   └── nova-chat.html      # Standalone single-file demo
+│   └── nova-chat.html
 │
-├── .vscode/                # VS Code configuration
-├── requirements.txt        # Python dependencies
-├── package.json            # npm configuration
-├── Dockerfile              # Docker configuration
-├── .env.example            # Environment configuration template
-├── run.sh                  # macOS/Linux startup script
-├── run.bat                 # Windows startup script
+├── .vscode/
+│
+├── requirements.txt
+├── package.json
+├── Dockerfile
+├── .env.example
+├── run.sh
+├── run.bat
 └── README.md
 ```
 
+The project separates Flask application logic, security controls, templates, static assets, database configuration, and deployment files for easier maintenance and development.
+
 ---
 
-## 🚀 Getting Started
+## ⚙️ Getting Started
 
 ### 1. Clone the Repository
 
@@ -146,7 +173,7 @@ python -m venv .venv
 #### macOS / Linux
 
 ```bash
-python3 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate
 ```
 
@@ -158,25 +185,21 @@ pip install -r requirements.txt
 
 ### 4. Configure Environment Variables
 
-Create your `.env` file from the provided example.
-
-#### Windows
+Create your `.env` file:
 
 ```bash
 copy .env.example .env
 ```
 
-#### macOS / Linux
+For macOS/Linux:
 
 ```bash
 cp .env.example .env
 ```
 
-Then configure the required environment values.
+Then add your required configuration and AI API key.
 
-For AI-powered responses, add your supported **Gemini or OpenAI API configuration** according to `.env.example`.
-
-> **Never commit API keys, passwords, `.env`, database secrets, or private credentials to GitHub.**
+> Never commit `.env`, API keys, secret keys, or database credentials to GitHub.
 
 ### 5. Run the Application
 
@@ -184,34 +207,19 @@ For AI-powered responses, add your supported **Gemini or OpenAI API configuratio
 python app.py
 ```
 
-Then open:
+Open:
 
 ```text
 http://127.0.0.1:5000
 ```
 
----
-
-## 🖥️ Run with VS Code
-
-1. Open the project folder in **VS Code**.
-2. Open **Terminal → New Terminal**.
-3. Create and activate the virtual environment.
-4. Install dependencies.
-5. Configure `.env`.
-6. Run:
-
-```bash
-python app.py
-```
-
-You can also use the included VS Code launch configuration.
+The project also provides Windows and macOS/Linux startup scripts.
 
 ---
 
 ## 🐳 Run with Docker
 
-Build the image:
+Build the Docker image:
 
 ```bash
 docker build -t nova .
@@ -220,253 +228,201 @@ docker build -t nova .
 Run the application:
 
 ```bash
-docker run \
-  -v nova-data:/data \
-  -p 5000:5000 \
-  --env-file .env \
-  nova
+docker run -v nova-data:/data -p 5000:5000 --env-file .env nova
 ```
 
-The Docker configuration runs the application as a non-root user and stores application data in `/data`.
+The Docker configuration is designed to run the application with a non-root user and persistent application data.
 
 ---
 
-## 🔒 Security
+## 🔐 Security Architecture
 
-Security is a major part of Nova AI Chatbot.
+Security was considered throughout the application rather than being added only at the UI level.
 
-### Authentication
+### Authentication Security
 
 * scrypt password hashing
-* Password strength validation
+* Password complexity validation
 * Common-password rejection
-* Constant-time login behavior
-* Secure session creation
-* Idle and absolute session expiration
+* Fresh session on login
+* CSRF token generation
+* Session expiration
 * POST-only logout
 
-### Request Protection
+### Request Security
 
-* CSRF protection
-* Origin validation
-* Rate limiting
-* Account lockout
+* CSRF validation
+* Origin checking
+* Per-IP and per-account rate limiting
+* Lockout protection
 * Request-size restrictions
-* Per-user chat/message limits
+* Chat/message limits
 
 ### Browser Security
 
-* Content Security Policy
+* Strict Content Security Policy
 * HSTS support
+* Secure cookie configuration
 * HttpOnly cookies
 * SameSite cookies
-* `__Host-` cookie prefix
-* COOP/CORP headers
+* COOP/CORP protection
 * No-store caching
-* Auto-escaped templates
 
-### Data & Application Security
+### Application Security
 
 * Parameterized SQL queries
-* No unsafe `eval()` usage
-* Bounded calculator evaluation
-* Server-side AI error logging
+* No use of `eval`
+* Bounded AST-based calculator evaluation
+* Server-side AI error handling
 * API keys transmitted through headers
-* Sensitive configuration stored through environment variables
+* Secrets excluded from version control
 
-The project also excludes sensitive files such as `.env`, database secrets, and secret keys from version control.
-
----
-
-## 🎨 User Experience
-
-Nova AI Chatbot focuses on creating a modern conversational experience with:
-
-* Responsive interface
-* Dark mode
-* Multiple themes
-* Typing animation
-* Chat history
-* Voice interaction
-* Clean authentication screens
-* Interactive chatbot interface
-
----
-
-## 🤖 AI Integration
-
-Nova supports two modes:
-
-### Offline Mode
-
-The application can run using its built-in chatbot without requiring an external AI API.
-
-### AI Provider Mode
-
-For advanced AI responses, configure a supported provider such as:
-
-* Google Gemini
-* OpenAI
-
-API credentials should be stored securely in `.env` and should **never be hard-coded into source files**.
-
----
-
-## 📊 Application Architecture
-
-```text
-                   ┌──────────────────────┐
-                   │      User / Browser  │
-                   └──────────┬───────────┘
-                              │
-                              ▼
-                   ┌──────────────────────┐
-                   │   HTML / CSS / JS    │
-                   │   Responsive UI      │
-                   └──────────┬───────────┘
-                              │
-                              ▼
-                   ┌──────────────────────┐
-                   │       Flask          │
-                   │   Backend / Routes   │
-                   └──────────┬───────────┘
-                              │
-                ┌─────────────┴─────────────┐
-                ▼                           ▼
-       ┌────────────────┐          ┌─────────────────┐
-       │     SQLite     │          │   AI Provider   │
-       │ Users / Chats  │          │ Gemini / OpenAI │
-       └────────────────┘          └─────────────────┘
-```
+These security measures are documented in the project's existing implementation.
 
 ---
 
 ## 📸 Screenshots
 
-> Add screenshots of your application here to showcase the UI.
-
 ### 🏠 Homepage
 
+> Add your homepage screenshot here.
+
 ```text
-Add your homepage screenshot here
+docs/screenshots/homepage.png
 ```
 
 ### 💬 Chat Interface
 
+> Add your chatbot screenshot here.
+
 ```text
-Add your chatbot screenshot here
+docs/screenshots/chat.png
 ```
 
 ### 🔐 Authentication
 
+> Add your login/signup screenshot here.
+
 ```text
-Add your login/signup screenshot here
+docs/screenshots/authentication.png
 ```
 
 ### 🌙 Dark Mode
 
+> Add your dark-mode screenshot here.
+
 ```text
-Add your dark-mode screenshot here
+docs/screenshots/dark-mode.png
 ```
 
 ---
 
 ## 🎥 Demo
 
-**Live Demo:** `Add your deployed URL here`
+### Live Demo
 
-**Demo Video:** `Add your demo video link here`
+**Coming soon**
 
-> A live demo and short project walkthrough are recommended for recruiters and reviewers.
+### Project Demo Video
 
----
+**Coming soon**
 
-## ⚙️ Production Configuration
-
-Before deploying to production, configure:
-
-```text
-SECRET_KEY=<strong-secret-key>
-FLASK_DEBUG=0
-HTTPS=1
-ALLOWED_HOSTS=<your-domain>
-```
-
-For production deployment, the project can be served using Gunicorn behind HTTPS:
-
-```bash
-gunicorn app:app
-```
-
-For multiple workers, use a shared rate-limit store such as Redis rather than relying only on in-memory counters.
+> Replace these sections with your deployed application URL and demo video once available.
 
 ---
 
-## 🧪 Standalone Demo
+## 📊 Project Highlights
 
-The repository also includes:
-
-```text
-standalone/nova-chat.html
-```
-
-This provides a single-file version of the chat interface that can run without the Python backend.
+| Area           | Implementation                    |
+| -------------- | --------------------------------- |
+| Frontend       | Responsive interactive chatbot UI |
+| Backend        | Flask REST/web application        |
+| Database       | SQLite                            |
+| Authentication | Secure user login/signup          |
+| AI             | Gemini/OpenAI integration         |
+| Voice          | Input & output                    |
+| Themes         | Dark mode + 4 themes              |
+| Security       | Multi-layer application security  |
+| Deployment     | Docker supported                  |
+| Offline Mode   | Built-in chatbot                  |
 
 ---
 
-## 🔮 Future Enhancements
+## 🧠 What I Learned
 
-Potential improvements include:
+Building Nova AI Chatbot provided practical experience in:
+
+* Full-stack web application development
+* Python Flask backend development
+* Database design with SQLite
+* User authentication and session management
+* Secure API integration
+* Frontend UI/UX development
+* Application security
+* Environment and secret management
+* Docker containerization
+* Git and GitHub workflow
+* Building applications that can operate with or without external AI services
+
+---
+
+## 🔮 Future Improvements
+
+Potential future enhancements include:
 
 * Streaming AI responses
 * Advanced conversation memory
-* File/document-based conversations
-* RAG-powered knowledge retrieval
-* Admin dashboard
-* Analytics and usage monitoring
+* File and document analysis
+* RAG-based knowledge retrieval
+* User-specific AI preferences
+* Analytics dashboard
+* Cloud database support
 * Redis-based distributed rate limiting
-* Cloud deployment
-* Automated testing and CI/CD
-* Additional AI model providers
+* Production deployment with CI/CD
 
 ---
 
-## 📌 Project Highlights
+## 📁 Production Checklist
 
-* **Full-stack conversational application**
-* **Secure authentication system**
-* **SQLite persistence**
-* **Optional real AI integration**
-* **Responsive modern UI**
-* **Dark mode and multiple themes**
-* **Voice interaction**
-* **Docker-ready**
-* **Production security considerations**
-* **Offline chatbot capability**
+Before deploying to production:
+
+```text
+✓ Set a strong SECRET_KEY
+✓ Disable Flask debug mode
+✓ Enable HTTPS
+✓ Configure ALLOWED_HOSTS
+✓ Configure the trusted reverse proxy correctly
+✓ Protect all API credentials
+✓ Use a production WSGI server
+✓ Configure persistent database storage
+✓ Use a shared rate-limit store for multiple workers
+```
+
+The current project documentation recommends Gunicorn behind HTTPS for production deployment and Redis/shared storage when running multiple workers.
 
 ---
 
-## 👩‍💻 Author
+## 👩‍💻 Developer
 
 **Sanjana Ganguli**
 
 B.Tech Computer Science Student
-Interested in Software Development, Cloud Computing & Artificial Intelligence
+Interested in **Software Development, Cloud Computing, Artificial Intelligence, and Machine Learning**.
 
 ### Connect With Me
 
-* **LinkedIn:** Add your LinkedIn profile
-* **GitHub:** Add your GitHub profile
-* **Portfolio:** Add your portfolio URL
+* 💼 LinkedIn: **Add your LinkedIn URL**
+* 🐙 GitHub: **Add your GitHub URL**
+* 📧 Email: **Add your professional email**
 
 ---
 
 ## ⭐ Support
 
-If you find **Nova AI Chatbot** useful or interesting, consider giving the repository a ⭐ on GitHub.
+If you find this project useful, consider giving the repository a ⭐ on GitHub.
 
 ---
 
 ## 📄 License
 
-Add your preferred open-source license here, such as **MIT License**, if you intend to distribute the project under that license.
+Add your preferred open-source license here, such as **MIT License**, if you choose to distribute the project under that license.
