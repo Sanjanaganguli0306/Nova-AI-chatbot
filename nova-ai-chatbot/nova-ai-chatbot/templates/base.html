@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Nova AI{% endblock %}</title>
+<meta name="description" content="Nova AI - a fast, private AI chat assistant with saved history, voice and themes.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="csrf" content="{{ csrf_token }}">
+<script src="{{ url_for('static', filename='theme.js') }}"></script>
+</head>
+<body>
+{% include 'icons.html' %}
+{% block body %}
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Primary">
+  <a class="logo" href="{{ url_for('home') }}"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>Nova<b>AI</b></span></a>
+  <div class="navr">
+    {% if request.endpoint == 'home' %}<a class="navlink hide-sm" href="#features">Features</a><a class="navlink hide-sm" href="#how">How it works</a>{% endif %}
+    {% include 'controls.html' %}
+    {% if session.uid %}<a class="btn sm" href="{{ url_for('chat') }}">Open chat</a>
+      <form class="inline" method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="navlink">Log out</button></form>
+    {% else %}<a class="navlink" href="{{ url_for('login') }}">Log in</a><a class="btn sm" href="{{ url_for('signup') }}">Sign up</a>{% endif %}
+  </div>
+</nav>
+<div id="main">{% block content %}{% endblock %}</div>
+{% endblock %}
+<noscript><p class="noscript">Nova AI works best with JavaScript enabled.</p></noscript>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

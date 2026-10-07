@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <span class="badge">AI assistant for work and learning</span>
+  <h1>Get answers, ideas and help &mdash; <span class="accent">instantly</span></h1>
+  <p class="lead">Nova is a fast, friendly AI chat assistant. Ask questions, write and debug code, work through maths, or talk it out by voice. Your conversations are saved securely to your account.</p>
+  <div class="cta">
+    <a class="btn lg" href="{{ url_for('chat') }}">Start chatting <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <a class="btn lg ghost" href="#features">Explore features</a>
+  </div>
+  <ul class="trust">
+    <li><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Secure sign-in</li>
+    <li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Saved history</li>
+    <li><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg>Voice input</li>
+  </ul>
+  <div class="preview card" aria-hidden="true">
+    <div class="preview-bar"><i></i><i></i><i></i><span>Nova AI</span></div>
+    <div class="preview-body">
+      <div class="msg user"><div class="bubble">Can you explain what a REST API is?</div></div>
+      <div class="msg bot"><div class="avatar"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg></div><div class="bubble">A REST API lets applications talk to each other over HTTP using simple, predictable URLs and standard methods such as <code>GET</code> and <code>POST</code>.</div></div>
+      <div class="msg bot"><div class="avatar"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg></div><div class="bubble"><span class="typing"><i></i><i></i><i></i></span></div></div>
+    </div>
+  </div>
+</header>
+
+<section id="features" class="section" aria-labelledby="ft">
+  <p class="eyebrow">Features</p>
+  <h2 id="ft" class="section-title">Everything you need in a chat assistant</h2>
+  <div class="grid">
+  {% for icon, title, text in [
+    ('chat', 'Natural conversations', 'Clear, formatted answers with code blocks, lists and one-click copy.'),
+    ('mic', 'Voice mode', 'Dictate your message and have replies read aloud.'),
+    ('clock', 'Saved history', 'Pick up any conversation right where you left it.'),
+    ('palette', 'Themes and dark mode', 'Four accent colours with light and dark appearance.'),
+    ('shield', 'Secure by design', 'Hashed passwords, CSRF protection and rate limiting.'),
+    ('device', 'Works everywhere', 'A responsive layout for phone, tablet and desktop.')] %}
+    <article class="card feat">
+      <div class="fi"><svg class="i" aria-hidden="true"><use href="#i-{{ icon }}"/></svg></div>
+      <h3>{{ title }}</h3><p>{{ text }}</p>
+    </article>
+  {% endfor %}
+  </div>
+</section>
+
+<section id="how" class="section" aria-labelledby="hw">
+  <p class="eyebrow">How it works</p>
+  <h2 id="hw" class="section-title">Up and running in three steps</h2>
+  <ol class="steps">
+    <li><span class="num">1</span><h3>Create an account</h3><p>Sign up with your email in a few seconds.</p></li>
+    <li><span class="num">2</span><h3>Ask anything</h3><p>Type or speak a question, or start from a suggestion.</p></li>
+    <li><span class="num">3</span><h3>Pick up anywhere</h3><p>Your history is saved, so you can continue on any device.</p></li>
+  </ol>
+</section>
+
+<section class="section band" aria-labelledby="cta">
+  <h2 id="cta">Ready to try Nova?</h2>
+  <p>Start a conversation in seconds &mdash; no setup required.</p>
+  <a class="btn lg light" href="{{ url_for('chat') }}">Start chatting <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+</section>
+
+<footer class="foot">
+  <a class="logo" href="{{ url_for('home') }}"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>Nova<b>AI</b></span></a>
+  <p>&copy; Nova AI &middot; Built with Flask</p>
+</footer>
+{% endblock %}

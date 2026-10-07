@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% set signup = mode == 'signup' %}
+{% block title %}{{ 'Create account' if signup else 'Log in' }} &middot; Nova AI{% endblock %}
+{% block body %}
+<div class="authpage">
+  <aside class="authbrand" aria-hidden="true">
+    <a class="logo" href="{{ url_for('home') }}" tabindex="-1"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>Nova<b>AI</b></span></a>
+    <div>
+      <h2>Your AI assistant, always ready.</h2>
+      <ul>
+        <li><svg class="i"><use href="#i-chat"/></svg>Clear, formatted answers</li>
+        <li><svg class="i"><use href="#i-clock"/></svg>Conversations saved to your account</li>
+        <li><svg class="i"><use href="#i-shield"/></svg>Secure by design</li>
+      </ul>
+    </div>
+    <p>&copy; Nova AI</p>
+  </aside>
+  <main id="main" class="authmain">
+    <div class="authtop">
+      <a class="navlink" href="{{ url_for('home') }}">&larr; Back to home</a>
+      <div class="navr">{% include 'controls.html' %}</div>
+    </div>
+    <form class="auth" method="post" autocomplete="on">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <svg class="mark xl only-narrow" aria-hidden="true"><use href="#mark"/></svg>
+      <h1>{{ 'Create your account' if signup else 'Welcome back' }}</h1>
+      <p class="sub">{{ 'Start chatting with Nova in seconds.' if signup else 'Log in to continue your conversations.' }}</p>
+      {% for m in get_flashed_messages() %}<div class="flash" role="alert"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg><span>{{ m }}</span></div>{% endfor %}
+      {% if signup %}
+      <label class="field"><span>Full name</span><input name="name" autocomplete="name" maxlength="60" required autofocus></label>
+      {% endif %}
+      <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" maxlength="120" required {{ '' if signup else 'autofocus' }}></label>
+      <div class="field"><label for="pw">Password</label>
+        <span class="pw">
+          <input name="password" id="pw" type="password" autocomplete="{{ 'new-password' if signup else 'current-password' }}" maxlength="128" {% if signup %}minlength="10"{% endif %} required>
+          <button type="button" class="icon ghost-icon" id="pwToggle" aria-label="Show password" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg></button>
+        </span>
+        {% if signup %}<small class="hint">At least 10 characters, with letters and numbers.</small>{% endif %}
+      </div>
+      <button class="btn lg block" id="authSubmit"><span class="spin" aria-hidden="true"></span><span class="lbl">{{ 'Create account' if signup else 'Log in' }}</span></button>
+      <p class="muted">{% if signup %}Already have an account? <a href="{{ url_for('login') }}">Log in</a>{% else %}New to Nova? <a href="{{ url_for('signup') }}">Create an account</a>{% endif %}</p>
+    </form>
+  </main>
+</div>
+{% endblock %}

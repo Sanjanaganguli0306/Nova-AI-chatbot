@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nova AI Chatbot</title>
+<style>
+:root{--bg:#f3f6fc;--card:#ffffffcc;--text:#1b2233;--muted:#6b7488;--line:#dfe5f1;--bot:#eef2fa;--a:#2f7df6;--b:#14c1c9;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-dark="0"]){--bg:#0d1220;--card:#171e2ecc;--text:#e8ecf5;--muted:#8d97ad;--line:#262f45;--bot:#1d2639}}
+:root[data-dark="1"]{--bg:#0d1220;--card:#171e2ecc;--text:#e8ecf5;--muted:#8d97ad;--line:#262f45;--bot:#1d2639}
+[data-theme=sunset]{--a:#f2653a;--b:#f5b02e}[data-theme=forest]{--a:#1f9d63;--b:#8cc63f}[data-theme=grape]{--a:#7c4dff;--b:#e04fd1}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;transition:background .4s}
+button,select,textarea,input{font:inherit;color:var(--text)}
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden}.bg i{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;animation:dr 14s ease-in-out infinite alternate}
+.bg i:nth-child(1){width:420px;height:420px;background:var(--a);top:-100px;left:-80px}.bg i:nth-child(2){width:360px;height:360px;background:var(--b);bottom:-90px;right:-60px;animation-delay:-5s}.bg i:nth-child(3){width:240px;height:240px;background:#e04fd1;top:40%;left:55%;opacity:.18;animation-delay:-9s}
+@keyframes dr{to{transform:translate(70px,50px) scale(1.15)}}
+.view{position:fixed;inset:0;z-index:1;display:none;overflow:auto;padding-top:env(safe-area-inset-top,0px)}.view.on{display:block;animation:fi .4s}.view#v-chat.on{display:flex}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}}
+.btn{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--a),var(--b));color:#fff;border:0;border-radius:12px;padding:10px 18px;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px var(--a)}.btn.big{padding:14px 28px;font-size:1.05rem}.btn.gh{background:none;border:2px solid var(--a);color:var(--a)}
+.rp{position:absolute;border-radius:50%;background:#fff6;transform:scale(0);animation:rp .6s linear;pointer-events:none}@keyframes rp{to{transform:scale(4);opacity:0}}
+.icon,select{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 10px;cursor:pointer;backdrop-filter:blur(8px);transition:transform .15s}.icon:hover{transform:scale(1.1)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;backdrop-filter:blur(12px);box-shadow:0 14px 34px -20px #0006;transition:transform .15s}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;gap:10px;flex-wrap:wrap}.nav .r{display:flex;gap:10px;align-items:center}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.25rem}.logo b{color:var(--a)}.logo svg{width:34px;height:34px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;max-width:1050px;margin:auto;padding:30px 5vw}
+.hero h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:14px 0}.g{background:linear-gradient(135deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:1.08rem}.badge{background:var(--bot);color:var(--a);padding:6px 14px;border-radius:99px;font-size:.85rem;font-weight:600;display:inline-block}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.art{display:grid;place-items:center}.art svg{width:min(380px,80%);animation:fl 4s ease-in-out infinite;filter:drop-shadow(0 30px 30px #0003)}@keyframes fl{50%{transform:translateY(-16px) rotate(2deg)}}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:1050px;margin:10px auto 50px;padding:0 5vw}.feat{padding:22px;cursor:default}.feat span{font-size:2rem}.feat h3{margin:8px 0 4px}.feat p{margin:0;color:var(--muted);font-size:.95rem}
+.aw{display:grid;place-items:center;min-height:calc(100% - 70px);padding:20px}.auth{width:min(400px,100%);padding:28px;display:flex;flex-direction:column;gap:12px;text-align:center}.auth svg{width:90px;margin:auto}
+.tabs{display:flex;background:var(--bot);border-radius:12px;padding:4px}.tabs button{flex:1;border:0;background:none;padding:8px;border-radius:9px;cursor:pointer;font-weight:600}.tabs .on{background:linear-gradient(135deg,var(--a),var(--b));color:#fff}
+.auth input{padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card)}.err{color:#d33;font-size:.9rem;min-height:1.2em}
+.side{width:270px;background:var(--card);backdrop-filter:blur(14px);border-right:1px solid var(--line);padding:14px;display:flex;flex-direction:column;gap:10px;z-index:3}
+.ht{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}.list{flex:1;overflow:auto;display:flex;flex-direction:column;gap:3px}
+.it{display:flex;justify-content:space-between;gap:6px;padding:9px;border-radius:10px;cursor:pointer;font-size:.9rem;transition:transform .15s}.it:hover{transform:translateX(4px)}.it span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.it:hover,.it.on{background:var(--bot)}.it button{background:none;border:0;cursor:pointer;opacity:.5}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}.top{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--card);backdrop-filter:blur(12px)}.top svg{width:34px}.top .r{margin-left:auto;display:flex;gap:8px}#menu{display:none}
+.on-dot{width:8px;height:8px;background:#2ecc71;border-radius:50%;display:inline-block;margin-right:5px;animation:pl 2s infinite}@keyframes pl{50%{opacity:.3}}
+.msgs{flex:1;overflow:auto;padding:20px 4%;display:flex;flex-direction:column;gap:14px}
+.m{display:flex;gap:10px;max-width:760px;width:100%;margin:0 auto;animation:pop .3s}.m.u{justify-content:flex-end}@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.97)}}
+.m>svg{width:36px;height:36px;flex:none}.col{max-width:88%}
+.bub{padding:10px 14px;border-radius:16px;background:var(--bot);white-space:pre-wrap;word-wrap:break-word;line-height:1.5}.u .bub{background:linear-gradient(135deg,var(--a),var(--b));color:#fff;border-bottom-right-radius:4px}
+.bub pre{background:#0d1117;color:#e6edf3;padding:10px;border-radius:10px;overflow:auto;margin:6px 0;white-space:pre}
+.act{display:flex;gap:4px;opacity:0;transition:.2s;margin-top:3px}.m:hover .act{opacity:1}.act button{background:none;border:0;cursor:pointer;font-size:.95rem;padding:2px 5px;border-radius:6px}.act button:hover{background:var(--bot)}
+.dots{display:inline-flex;gap:4px}.dots i{width:8px;height:8px;border-radius:50%;background:var(--muted);animation:bn 1.2s infinite}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}@keyframes bn{0%,60%,100%{transform:none;opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+.wel{margin:auto;text-align:center}.wel svg{width:130px;animation:fl 3s ease-in-out infinite}.wel p{color:var(--muted);margin:4px 0 14px}.chip{background:var(--card);border:1px solid var(--line);padding:9px 15px;border-radius:99px;cursor:pointer;margin:4px;transition:.2s}.chip:hover{border-color:var(--a);color:var(--a);transform:translateY(-3px)}
+.comp{display:flex;gap:8px;align-items:flex-end;padding:12px 4%;border-top:1px solid var(--line);background:var(--card);backdrop-filter:blur(12px)}
+textarea{flex:1;resize:none;max-height:130px;padding:12px;background:var(--bot);border:1px solid var(--line);border-radius:14px;outline:none}textarea:focus{border-color:var(--a);box-shadow:0 0 0 3px #2f7df622}
+.rec{background:#e5484d!important;animation:pl 1s infinite}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 16px;border-radius:99px;z-index:20;animation:fi .3s}
+@media(max-width:760px){.hero{grid-template-columns:1fr;text-align:center}.cta{justify-content:center}.art{order:-1}.art svg{width:200px}.side{position:fixed;inset:0 auto 0 0;transform:translateX(-100%);transition:.25s}.side.open{transform:none;box-shadow:0 0 40px #0006}#menu{display:block}}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--a)"/><stop offset="1" style="stop-color:var(--b)"/></linearGradient>
+<symbol id="bot" viewBox="0 0 200 200">
+ <line x1="100" y1="22" x2="100" y2="42" stroke="url(#gr)" stroke-width="6" stroke-linecap="round"/><circle cx="100" cy="18" r="9" fill="#ff6b81"><animate attributeName="r" values="9;12;9" dur="1.6s" repeatCount="indefinite"/></circle>
+ <rect x="22" y="80" width="18" height="44" rx="9" fill="url(#gr)"/><rect x="160" y="80" width="18" height="44" rx="9" fill="url(#gr)"/>
+ <rect x="35" y="42" width="130" height="110" rx="38" fill="url(#gr)"/><rect x="50" y="58" width="100" height="72" rx="28" fill="#0f1730"/>
+ <ellipse cx="78" cy="88" rx="11" ry="12" fill="#7ff0ff"><animate attributeName="ry" values="12;12;1.5;12" keyTimes="0;.9;.95;1" dur="4s" repeatCount="indefinite"/></ellipse>
+ <ellipse cx="122" cy="88" rx="11" ry="12" fill="#7ff0ff"><animate attributeName="ry" values="12;12;1.5;12" keyTimes="0;.9;.95;1" dur="4s" repeatCount="indefinite"/></ellipse>
+ <path d="M84 108q16 14 32 0" stroke="#7ff0ff" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="62" cy="106" r="6" fill="#ff8fa3" opacity=".6"/><circle cx="138" cy="106" r="6" fill="#ff8fa3" opacity=".6"/>
+ <rect x="70" y="156" width="60" height="30" rx="14" fill="url(#gr)" opacity=".85"/></symbol></defs></svg>
+<div class="bg"><i></i><i></i><i></i></div>
+
+<section class="view" id="v-home">
+ <nav class="nav"><div class="logo"><svg><use href="#bot"/></svg>Nova<b>AI</b></div><div class="r"><span class="tools"></span><button class="btn gh" data-go="auth" data-tab="login">Login</button><button class="btn" data-go="auth" data-tab="signup">Sign up</button></div></nav>
+ <div class="hero"><div><span class="badge">✨ Smart • Fast • Voice-ready</span><h1>Chat with <span class="g">Nova</span>, your friendly AI companion</h1><p>Ask anything, solve maths, brainstorm ideas or talk by voice. Your conversations are saved so you can pick up right where you left off.</p>
+ <div class="cta"><button class="btn big" id="start">Start chatting →</button><button class="btn big gh" data-scroll>Explore features</button></div></div>
+ <div class="art"><svg viewBox="0 0 200 200"><use href="#bot"/></svg></div></div>
+ <div class="feats" id="feats"></div>
+</section>
+
+<section class="view" id="v-auth"><nav class="nav"><div class="logo" data-go="home" style="cursor:pointer"><svg><use href="#bot"/></svg>Nova<b>AI</b></div><div class="r"><span class="tools"></span></div></nav>
+ <div class="aw"><div class="card auth"><svg viewBox="0 0 200 200"><use href="#bot"/></svg><h2 id="at" style="margin:0">Welcome back</h2>
+  <div class="tabs"><button data-tab="login" class="on">Login</button><button data-tab="signup">Sign up</button></div>
+  <input id="an" placeholder="Full name" style="display:none"><input id="ae" type="email" placeholder="Email"><input id="ap" type="password" placeholder="Password (8+ chars, letters & numbers)" maxlength="128" autocomplete="current-password">
+  <div class="err" id="err"></div><button class="btn big" id="asub">Login</button><button class="btn gh" id="guest">Continue as guest</button></div></div></section>
+
+<section class="view" id="v-chat">
+ <aside class="side" id="side"><div class="logo"><svg><use href="#bot"/></svg>Nova<b>AI</b></div><button class="btn" id="new">＋ New chat</button><div class="ht">Chat history</div><div class="list" id="list"></div>
+  <div style="font-size:.9rem;color:var(--muted)">👤 <span id="who"></span> · <a href="#" id="out" style="color:var(--a)">Logout</a></div></aside>
+ <section class="main"><div class="top"><button class="icon" id="menu">☰</button><svg viewBox="0 0 200 200"><use href="#bot"/></svg><div><b>Nova AI</b><div style="font-size:.75rem;color:var(--muted)"><span class="on-dot"></span>Online</div></div>
+  <div class="r"><span class="tools"></span><button class="icon" id="spk" title="Read replies aloud">🔇</button></div></div>
+  <div class="msgs" id="msgs"></div>
+  <div class="comp"><button class="icon" id="mic" title="Voice input">🎙️</button><textarea id="in" rows="1" placeholder="Message Nova… (Enter to send)"></textarea><button class="btn" id="send">Send ➤</button></div></section>
+</section>
+
+<template id="tools"><select class="theme"><option value="ocean">🌊 Ocean</option><option value="sunset">🌅 Sunset</option><option value="forest">🌲 Forest</option><option value="grape">🍇 Grape</option></select><button class="icon dk" title="Dark mode">🌓</button></template>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],R=document.documentElement;
+const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+const BOT='<svg viewBox="0 0 200 200"><use href="#bot"/></svg>';
+let user=ls.get('nova_user',null);if(user&&(!user.exp||user.exp<Date.now()))user=null;let chats=[],cur=null,speak=false,busy=false,sample=null;
+const key=()=>'nova_chats_'+user.email;
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),1800)}
+function go(v){$$('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));if(v==='chat')initChat()}
+// theme + dark
+R.dataset.theme=ls.get('nova_theme','ocean');const d0=ls.get('nova_dark',null);if(d0!==null)R.dataset.dark=d0?'1':'0';
+$$('.tools').forEach(t=>{t.style.display='contents';t.appendChild($('#tools').content.cloneNode(true))});
+$$('.theme').forEach(s=>{s.value=R.dataset.theme;s.onchange=()=>{R.dataset.theme=s.value;ls.set('nova_theme',s.value);$$('.theme').forEach(x=>x.value=s.value)}});
+$$('.dk').forEach(b=>b.onclick=()=>{const on=getComputedStyle(R).getPropertyValue('--bg').trim()==='#0d1220';R.dataset.dark=on?'0':'1';ls.set('nova_dark',!on)});
+// ripple + tilt
+document.addEventListener('click',e=>{const b=e.target.closest('.btn');if(!b)return;const r=b.getBoundingClientRect(),s=document.createElement('span');s.className='rp';const z=Math.max(r.width,r.height);s.style.cssText=`width:${z}px;height:${z}px;left:${e.clientX-r.left-z/2}px;top:${e.clientY-r.top-z/2}px`;b.appendChild(s);setTimeout(()=>s.remove(),600)});
+$('#feats').innerHTML=[['💬','Smart chat','Natural conversations with streaming replies.'],['🎙️','Voice mode','Speak to Nova and hear answers aloud.'],['🗂️','Chat history','Every conversation saved and searchable.'],['🎨','Themes','Four colour themes and dark mode.'],['🔐','Accounts','Sign up and log in to keep chats private.'],['📱','Responsive','Beautiful on phone, tablet and desktop.']].map(f=>`<div class="card feat"><span>${f[0]}</span><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('');
+$$('.feat').forEach(c=>{c.onmousemove=e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(600px) rotateY(${x*14}deg) rotateX(${-y*14}deg) translateY(-4px)`};c.onmouseleave=()=>c.style.transform=''});
+$$('[data-go]').forEach(b=>b.onclick=()=>{go(b.dataset.go);if(b.dataset.tab)tab(b.dataset.tab)});
+$('[data-scroll]').onclick=()=>$('#feats').scrollIntoView({behavior:'smooth'});
+$('#start').onclick=()=>user?go('chat'):go('auth');
+// auth
+let mode='login';
+function tab(m){mode=m;$$('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===m));$('#an').style.display=m==='signup'?'':'none';$('#asub').textContent=m==='signup'?'Create account':'Login';$('#at').textContent=m==='signup'?'Create your account':'Welcome back';$('#err').textContent=''}
+$$('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+const sha=async(t,s)=>{try{const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(t),'PBKDF2',false,['deriveBits']);return hex(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(s),iterations:150000,hash:'SHA-256'},k,256))}catch{return btoa(s+t)}};
+$('#asub').onclick=async()=>{const n=$('#an').value.trim(),e=$('#ae').value.trim().toLowerCase(),p=$('#ap').value,users=ls.get('nova_users',{}),er=$('#err');
+ const f=ls.get('nova_fail',{}),fe=f[e]||{n:0,t:0};if(fe.t>Date.now())return er.textContent='Too many attempts. Try again in '+Math.ceil((fe.t-Date.now())/1000)+'s.';
+ if(!/^\S+@\S+\.\S+$/.test(e)||e.length>120)return er.textContent='Enter a valid email.';
+ if(p.length<8||p.length>128||!/[A-Za-z]/.test(p)||!/\d/.test(p))return er.textContent='Password needs 8+ characters with letters and numbers.';
+ const sl=mode==='signup'?hex(crypto.getRandomValues(new Uint8Array(16))):(users[e]?.s||'x');const h=await sha(p,sl);
+ if(mode==='signup'){if(!n)return er.textContent='Please enter your name.';if(users[e])return er.textContent='Email already registered.';users[e]={name:n.slice(0,60),h,s:sl};ls.set('nova_users',users);user={name:n,email:e}}
+ else{if(!users[e]||users[e].h!==h){fe.n++;if(fe.n>=5){fe.t=Date.now()+6e4;fe.n=0}f[e]=fe;ls.set('nova_fail',f);return er.textContent='Invalid email or password.'}user={name:users[e].name,email:e}}
+ user.exp=Date.now()+72e5;ls.set('nova_user',user);toast('Welcome, '+user.name+'! 🎉');go('chat')};
+$('#guest').onclick=()=>{user={name:'Guest',email:'guest'};user.exp=Date.now()+72e5;ls.set('nova_user',user);go('chat')};
+$('#out').onclick=e=>{e.preventDefault();user=null;ls.set('nova_user',null);go('home')};
+// chat
+const msgs=$('#msgs'),scroll=()=>msgs.scrollTop=msgs.scrollHeight,save=()=>ls.set(key(),chats);
+const esc=t=>t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=t=>esc(t).replace(/```\w*\n?([\s\S]*?)```/g,'<pre>$1</pre>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+function add(role,html,raw){const m=document.createElement('div');m.className='m '+(role==='user'?'u':'');m.innerHTML=(role==='user'?'':BOT)+'<div class="col"><div class="bub">'+html+'</div></div>';msgs.appendChild(m);scroll();
+ const b=m.querySelector('.bub');b.actions=t=>{if(role==='user')return;const a=document.createElement('div');a.className='act';a.innerHTML='<button title="Copy">📋</button><button title="Good">👍</button><button title="Bad">👎</button>';
+  const [c,u,d]=a.children;c.onclick=()=>{navigator.clipboard?.writeText(t);toast('Copied!')};u.onclick=()=>{u.textContent='👍✨';toast('Thanks for the feedback!')};d.onclick=()=>{d.textContent='👎✓'};m.querySelector('.col').appendChild(a)};
+ if(raw)b.actions(raw);return b}
+function welcome(){msgs.innerHTML=`<div class="wel">${BOT}<h2 style="margin:6px 0 0">Hi ${esc(user.name.split(' ')[0])}, how can I help? 👋</h2><p>Pick a prompt or type your own.</p>`+['Tell me a joke','Explain Flask in 3 lines','12*(3+4)','Plan a 3-day Jaipur trip'].map(s=>`<button class="chip">${s}</button>`).join('')+'</div>';$$('.chip').forEach(c=>c.onclick=()=>send(c.textContent))}
+function renderList(){const l=$('#list');l.innerHTML='';chats.slice().reverse().forEach(c=>{const d=document.createElement('div');d.className='it'+(c.id===cur?' on':'');d.innerHTML=`<span>💬 ${esc(c.title)}</span><button>🗑</button>`;d.onclick=()=>openChat(c.id);d.querySelector('button').onclick=e=>{e.stopPropagation();chats=chats.filter(x=>x.id!==c.id);save();if(cur===c.id){cur=null;welcome()}renderList()};l.appendChild(d)})}
+function openChat(id){cur=id;$('#side').classList.remove('open');msgs.innerHTML='';chats.find(c=>c.id===id).msgs.forEach(m=>add(m.role,fmt(m.content),m.role==='user'?null:m.content));renderList()}
+function initChat(){chats=ls.get(key(),[]);cur=null;$('#who').textContent=user.name;welcome();renderList()}
+$('#new').onclick=()=>{cur=null;welcome();renderList();$('#side').classList.remove('open')};$('#menu').onclick=()=>$('#side').classList.toggle('open');
+function fallback(t){t=t.toLowerCase().trim();if(/^[\d\s+\-*/().%]+$/.test(t)&&/\d/.test(t)){try{return t+' = '+Function('"use strict";return ('+t+')')()}catch{}}
+ if(/time/.test(t))return 'The time is '+new Date().toLocaleTimeString();if(/\b(hi|hello|hey)\b/.test(t))return 'Hello! 👋 How can I help?';if(/joke/.test(t))return 'Why do programmers prefer dark mode? Because light attracts bugs.';
+ return "I'm in offline mode, so my answers are limited. Allow AI access in Claude for full replies."}
+async function ai(h,on){if(!sample)return fallback(h[h.length-1].content);const t=h.slice(-20).map(m=>({role:m.role,content:m.content}));t[0].content='[You are Nova, a friendly, concise assistant in a chat app. Light markdown only.]\n'+t[0].content;
+ try{return(await sample(t,{cache:false,onText:({text})=>on(text)})).text}catch(e){return e.code==='not_granted'?fallback(h[h.length-1].content):'⚠️ '+(e.message||'AI error')}}
+async function send(text){text=(text||$('#in').value).trim().slice(0,2000);if(!text||busy)return;if(Date.now()-(window._ls||0)<800)return toast('Slow down a little');window._ls=Date.now();busy=true;$('#in').value='';$('#in').style.height='auto';
+ let c=chats.find(x=>x.id===cur);if(!c){c={id:Date.now(),title:text.slice(0,36),msgs:[]};chats.push(c);cur=c.id}
+ if(msgs.querySelector('.wel'))msgs.innerHTML='';c.msgs.push({role:'user',content:text});add('user',esc(text));
+ const b=add('bot','<span class="dots"><i></i><i></i><i></i></span>');const r=await ai(c.msgs,t=>{b.textContent=t;scroll()});
+ b.innerHTML=fmt(r);b.actions(r);scroll();c.msgs.push({role:'assistant',content:r});save();renderList();
+ if(speak&&window.speechSynthesis)speechSynthesis.speak(new SpeechSynthesisUtterance(r.replace(/[`*]/g,'')));busy=false}
+$('#send').onclick=()=>send();$('#in').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};
+$('#in').oninput=e=>{e.target.style.height='auto';e.target.style.height=Math.min(e.target.scrollHeight,130)+'px'};
+$('#spk').onclick=e=>{speak=!speak;e.target.textContent=speak?'🔊':'🔇';toast(speak?'Voice replies on':'Voice replies off');if(!speak&&window.speechSynthesis)speechSynthesis.cancel()};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+$('#mic').onclick=()=>{if(!SR)return toast('Voice input not supported here');const r=new SR();$('#mic').classList.add('rec');r.onresult=e=>send(e.results[0][0].transcript);r.onend=r.onerror=()=>$('#mic').classList.remove('rec');try{r.start()}catch{}};
+(async()=>{try{sample=await window.claude?.use('sample')}catch{sample=null}})();
+go(user?'chat':'home');
+</script></body></html>

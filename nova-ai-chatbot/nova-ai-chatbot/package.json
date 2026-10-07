@@ -1,0 +1,13 @@
+{
+  "name": "nova-ai-chatbot",
+  "version": "1.0.0",
+  "description": "Nova AI Chatbot - Flask + SQLite web app (npm scripts are shortcuts; no Node dependencies required)",
+  "private": true,
+  "scripts": {
+    "setup": "pip install -r requirements.txt",
+    "start": "python app.py",
+    "dev": "python app.py",
+    "prod": "gunicorn app:app"
+  },
+  "license": "MIT"
+}

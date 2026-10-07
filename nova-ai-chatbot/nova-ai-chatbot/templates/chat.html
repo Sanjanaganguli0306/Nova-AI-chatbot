@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Chat &middot; Nova AI{% endblock %}
+{% block body %}
+<div id="chatApp" class="app">
+  <div id="scrim" class="scrim" hidden></div>
+  <aside id="side" class="side" aria-label="Conversations">
+    <div class="side-head">
+      <a class="logo" href="{{ url_for('home') }}"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>Nova<b>AI</b></span></a>
+      <button class="icon only-mobile" id="closeSide" aria-label="Close sidebar"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <button id="newChat" class="btn block" title="New chat (Ctrl+Shift+O)"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg> New chat</button>
+    <div class="search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input id="search" type="search" placeholder="Search chats" aria-label="Search chats" autocomplete="off"></div>
+    <nav id="chatList" class="chatlist" aria-label="Chat history"></nav>
+    <div class="account">
+      <span class="ava" aria-hidden="true">{{ (name or '?')[0]|upper }}</span>
+      <span class="uname" title="{{ name }}">{{ name }}</span>
+      <form class="inline" method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="icon" title="Log out" aria-label="Log out"><svg class="i" aria-hidden="true"><use href="#i-logout"/></svg></button></form>
+    </div>
+  </aside>
+  <section class="main">
+    <header class="top">
+      <button class="icon only-mobile" id="menu" aria-label="Open sidebar"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      <h1 id="chatTitle" class="ctitle">New chat</h1>
+      <div class="navr">
+        {% include 'controls.html' %}
+        <button class="icon" id="speakBtn" title="Read replies aloud" aria-label="Read replies aloud" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-volume-off"/></svg></button>
+      </div>
+    </header>
+    <div class="msgs-wrap">
+      <div id="msgs" class="msgs" role="log" aria-live="polite" aria-label="Conversation"></div>
+      <button id="toBottom" class="tobottom" aria-label="Scroll to latest message" hidden><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></button>
+    </div>
+    <div class="composer-wrap">
+      <div class="composer">
+        <textarea id="input" rows="1" placeholder="Message Nova" aria-label="Message" maxlength="2000"></textarea>
+        <span id="count" class="count" hidden></span>
+        <button class="icon" id="mic" title="Voice input" aria-label="Voice input"><svg class="i" aria-hidden="true"><use href="#i-mic"/></svg></button>
+        <button class="send" id="sendBtn" title="Send message" aria-label="Send message" disabled><svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+      </div>
+      <p class="fine">Nova can make mistakes. <kbd>Enter</kbd> to send &middot; <kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line &middot; <kbd>/</kbd> to focus</p>
+    </div>
+  </section>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</div>
+{% endblock %}
